@@ -8,5 +8,51 @@
 <body>
 <h1>Welcome to Anguish Idle</h1>
 <p>Landing page for Anguish Idle. Under development.</p>
+
+<h1>Sandbox Input</h1>
+<p>
+    <label id="anguishDesc">Anguish: 0</label>
+</p>
+<button type="button" onclick="addAnguish(1)">Create Anguish</button>
+<p>
+    <label id="mortalDesc">Mortals: 0</label>
+</p>
+<button type="button" onclick="addMortal()">Harvest Mortal</button>
+
+<h1>Sandbox Resources</h1>
+
+
+<h1>List working values</h1>
+    {% for key, value in anguish_producers.items() %}
+    <p>{{ key }} | Anguish Cost: {{ value["Cost-Anguish"] }} | Cost Previous Tier: {{ value["Cost-Prev"] }}</p>    
+    {% endfor %}
 </body>
 </html>
+
+<script>
+    let anguishVar = 0;
+    let mortalVar = 0;
+    
+    document.getElementById("anguishDesc").innerHTML = "Anguish: " + anguishVar;
+    
+    function addAnguish(amt) {
+        anguishVar += amt;
+        document.getElementById("anguishDesc").innerHTML = "Anguish: " + anguishVar;
+    }
+
+    function addMortal(){
+        mortalVar += 1;
+        document.getElementById("mortalDesc").innerHTML = "Mortals: " + mortalVar;
+    }
+
+    function gameTickController(){
+        if (mortalVar > 0){        
+            addAnguish(mortalVar);
+        }
+    }
+    
+    // Game tick = 3 seconds
+    var intervalId = window.setInterval(function(){
+        gameTickController()
+    }, 1000);
+</script>
